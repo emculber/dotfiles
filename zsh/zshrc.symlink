@@ -1,0 +1,81 @@
+export DOTFILES=$HOME/.dotfiles
+export ZSH=$DOTFILES/zsh
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+##
+#Set Options for ZSH
+setopt CORRECT
+
+unsetopt beep
+
+autoload -U compinit
+autoload -U compinit && compinit
+autoload colors zsh/terminfo
+
+#PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg_no_bold[yellow]%}%1~ %{$reset_color%}%#"
+
+source $DOTFILES/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $DOTFILES/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
+#source $DOTFILES/zshrcPlugins/zsh-git-prompt/zshrc.sh
+
+#zsh-completions
+fpath=(/Users/Erik/dotfiles/zshrcPlugins/zsh-completions/zsh-completions.plugin.zsh $fpath)
+fpath=($fpath /Users/Erik/dotfiles/zshrcPlugins/func)
+typeset -U fpath
+
+zmodload zsh/terminfo
+
+if [[ `uname` == 'Darwin' ]]; then
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+else
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
+fi
+
+if [ "$TERM" = "xterm" ]; then
+  local Mode=$[ $RANDOM % 3 ]
+  local Color=$[ $RANDOM % 6 ]
+  local RandomColor=$'%{\e[$Mode;$[31+$Color]m%}'
+  local Default=$'%{\e[1;m%}'
+  setopt PROMPT_SUBST
+  PajsdflkjROMPT=${RandomColor}${PROMPT}${Default}
+  if [ "x${RPROMPT}" != "x" ]; then
+    RPROMPT=${RandomColor}${default}${RandomColor}
+  fi
+fi
+export M2_HOME=/Users/Erik/uportal/maven
+export M2=$M2_HOME/bin
+export PATH=$M2:$PATH
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
+export ANT_HOME=/Users/Erik/uportal/ant
+export PATH=$PATH:$ANT_HOME/bin
+
+export TOMCAT_HOME=/Users/Erik/uportal/tomcat
+export PATH=$PATH:$TOMCAT_HOME
+export JAVA_OPTS="-server -XX:MaxPermSize=512m -Xms1024m -Xmx2048m"
+
+export HSQLDB_HOME='/Users/Erik/uportal/hsqldb'
+export PATH=$PATH:$HSQLDB_HOME/bin
+
+export POSTGRES_HOME=/Applications/Postgres.app/Contents
+export PGDATA=/Users/Erik/Library/Application\ Support/Postgres/var-9.4
+export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/bin
+export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/include
+
+export GOPATH=~/Documents/go
+
+alias cgrep='grep -rin --colour=auto' 
+alias ll='ls -la' 
+alias pros='ps aux | grep' 
+
+# source all .zsh files inside of the zsh/ directory
+for config ($ZSH/**/*.zsh) source $config
