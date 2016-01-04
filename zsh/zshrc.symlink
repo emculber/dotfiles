@@ -18,15 +18,14 @@ autoload colors zsh/terminfo
 
 #PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg_no_bold[yellow]%}%1~ %{$reset_color%}%#"
 
-source $DOTFILES/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $DOTFILES/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source $DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
-#source $DOTFILES/zshrcPlugins/zsh-git-prompt/zshrc.sh
+#source $DOTFILES/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source $DOTFILES/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+#source $DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
 
 #zsh-completions
-fpath=(/Users/Erik/dotfiles/zshrcPlugins/zsh-completions/zsh-completions.plugin.zsh $fpath)
-fpath=($fpath /Users/Erik/dotfiles/zshrcPlugins/func)
-typeset -U fpath
+#fpath=($DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh $fpath)
+#fpath=($fpath $DOTFILES/zsh/plugins/func)
+#typeset -U fpath
 
 zmodload zsh/terminfo
 
