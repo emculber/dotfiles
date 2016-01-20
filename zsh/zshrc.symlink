@@ -48,21 +48,22 @@ if [ "$TERM" = "xterm" ]; then
     RPROMPT=${RandomColor}${default}${RandomColor}
   fi
 fi
-export M2_HOME=/Users/Erik/uportal/maven
+
+export M2_HOME=$HOME/uportal/maven
 export M2=$M2_HOME/bin
 export PATH=$M2:$PATH
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
 export PATH=$JAVA_HOME/bin:$PATH
 
-export ANT_HOME=/Users/Erik/uportal/ant
+export ANT_HOME=$HOME/uportal/ant
 export PATH=$PATH:$ANT_HOME/bin
 
-export TOMCAT_HOME=/Users/Erik/uportal/tomcat
+export TOMCAT_HOME=$HOME/uportal/tomcat
 export PATH=$PATH:$TOMCAT_HOME
 export JAVA_OPTS="-server -XX:MaxPermSize=512m -Xms1024m -Xmx2048m"
 
-export HSQLDB_HOME='/Users/Erik/uportal/hsqldb'
+export HSQLDB_HOME=$HOME/uportal/hsqldb
 export PATH=$PATH:$HSQLDB_HOME/bin
 
 export POSTGRES_HOME=/Applications/Postgres.app/Contents

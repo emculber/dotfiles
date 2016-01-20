@@ -1,6 +1,6 @@
 # Base16 Shell
 if [ -z "$THEME" ]; then
-  export THEME="base16-Isotope"
+  export THEME="base16-isotope"
 fi
 if [ -z "$BACKGROUND" ]; then
   export BACKGROUND="dark"

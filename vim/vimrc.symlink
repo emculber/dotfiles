@@ -26,9 +26,16 @@ set shiftwidth=2                        "Indenting is X spaces
 set expandtab                           "Don't use actual tab character (C-v)
 nmap <F8> :TagbarToggle<CR>
 imap jj <Esc>
-imap JJ <Esc>
+
+nmap <silent> KK :wincmd k<CR>
+nmap <silent> JJ :wincmd j<CR>
+nmap <silent> HH :wincmd h<CR>
+nmap <silent> LL  :wincmd l<CR>
+
 let g:SuperTabDefaultCompletionType = "context"
 let g:go_fmt_command = "goimports"
+let g:indentLine_color_term = 239
+
 setlocal omnifunc=javacomplete#Complete
 set tags=/home/erik/tags
 set backspace=indent,eol,start
