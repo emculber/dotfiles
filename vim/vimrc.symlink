@@ -52,5 +52,7 @@ let NERDTreeShowHidden=1
 " let NERDTreeIgnore = ['\.js.map$']
 " Toggle NERDTree
 map <C-n> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree
 " expand to the path of the file in the current buffer
 " nmap <silent> <leader>y :NERDTreeFind<cr>
+autocmd VimEnter * wincmd p
