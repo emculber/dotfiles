@@ -11,6 +11,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'Yggdroot/indentLine'
+Plugin 'fatih/vim-go'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'severin-lemaignan/vim-minimap'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
