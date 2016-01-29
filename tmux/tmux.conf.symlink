@@ -1,3 +1,8 @@
+set -g default-terminal "screen-256color"
+
+set -g status-bg black
+set -g status-fg blue
+
 # unbind default prefix and set it to Ctrl+a
 unbind C-b
 set -g prefix C-a

@@ -1,4 +1,4 @@
-TFILES=$HOME/.dotfiles
+DOTFILES=$HOME/.dotfiles
 
 echo -e "\nCreating symlinks"
 echo "=============================="
