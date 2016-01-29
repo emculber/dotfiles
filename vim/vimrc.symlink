@@ -8,11 +8,11 @@ source ~/.vim/plugins.vim
 set nocompatible " not compatible with vi must be iMproved, required
 set t_Co=256
 
-colorscheme badwolf
-
 filetype plugin on
 filetype plugin indent on
 syntax on
+
+colorscheme BusyBee
 
 set ignorecase
 set hlsearch
@@ -24,6 +24,16 @@ set si                                  "Smart Indent
 set tabstop=2                           "Set Tabs to proper location
 set shiftwidth=2                        "Indenting is X spaces
 set expandtab                           "Don't use actual tab character (C-v)
+
+setlocal omnifunc=javacomplete#Complete
+set tags=/home/erik/tags
+set backspace=indent,eol,start
+
+"##################
+"  Key Bindings
+"##################
+
+"
 nmap <F8> :TagbarToggle<CR>
 imap jj <Esc>
 
@@ -32,27 +42,19 @@ nmap <silent> JJ :wincmd j<CR>
 nmap <silent> HH :wincmd h<CR>
 nmap <silent> LL  :wincmd l<CR>
 
-let g:SuperTabDefaultCompletionType = "context"
-let g:go_fmt_command = "goimports"
-let g:indentLine_color_term = 239
-
-setlocal omnifunc=javacomplete#Complete
-set tags=/home/erik/tags
-set backspace=indent,eol,start
 
 "##################
 "   Plugins
 "##################
 
-" close NERDTree after a file is opened
-let g:NERDTreeQuitOnOpen=0
-" show hidden files in NERDTree
+"NERDTree*******************************
 let NERDTreeShowHidden=1
-" remove some files by extension
-" let NERDTreeIgnore = ['\.js.map$']
-" Toggle NERDTree
 map <C-n> :NERDTreeToggle<CR>
 autocmd VimEnter * NERDTree
-" expand to the path of the file in the current buffer
-" nmap <silent> <leader>y :NERDTreeFind<cr>
 autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"NERDTree*******************************
+
+let g:SuperTabDefaultCompletionType = "context"
+let g:go_fmt_command = "goimports"
+let g:indentLine_color_term = 2
