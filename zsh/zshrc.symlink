@@ -71,10 +71,13 @@ export PGDATA=/Users/Erik/Library/Application\ Support/Postgres/var-9.4
 export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/bin
 export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/include
 
-export GOPATH=~/Documents/go
+export GOPATH=/Users/Erik/.golang
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
 
 alias cgrep='grep -rin --colour=auto' 
-alias ll='ls -la' 
+alias ll='ls' 
+alias ls='ls -la' 
 alias pros='ps aux | grep' 
 
 # source all .zsh files inside of the zsh/ directory
