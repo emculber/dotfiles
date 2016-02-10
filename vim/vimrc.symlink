@@ -13,6 +13,7 @@ filetype plugin indent on
 syntax on
 
 colorscheme BusyBee
+set background=dark
 
 set ignorecase
 set hlsearch
