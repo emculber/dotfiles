@@ -1,0 +1,61 @@
+"############
+"  General
+"############
+
+" load plugins from the package manager vundle
+source ~/.vim/plugins.vim
+
+set nocompatible " not compatible with vi must be iMproved, required
+set t_Co=256
+
+filetype plugin on
+filetype plugin indent on
+syntax on
+
+colorscheme BusyBee
+set background=dark
+
+set ignorecase
+set hlsearch
+set undofile                            "Allow for undoing AFTER a file is :wq
+set undodir=$HOME/.vim/undo             "Dir used for undo
+set number                              "Display line numbers
+set ai                                  "Auto Indent
+set si                                  "Smart Indent
+set tabstop=2                           "Set Tabs to proper location
+set shiftwidth=2                        "Indenting is X spaces
+set expandtab                           "Don't use actual tab character (C-v)
+
+setlocal omnifunc=javacomplete#Complete
+set tags=/home/erik/tags
+set backspace=indent,eol,start
+
+"##################
+"  Key Bindings
+"##################
+
+"
+nmap <F8> :TagbarToggle<CR>
+imap jj <Esc>
+
+nmap <silent> KK :wincmd k<CR>
+nmap <silent> JJ :wincmd j<CR>
+nmap <silent> HH :wincmd h<CR>
+nmap <silent> LL  :wincmd l<CR>
+
+
+"##################
+"   Plugins
+"##################
+
+"NERDTree*******************************
+let NERDTreeShowHidden=1
+map <C-n> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"NERDTree*******************************
+
+let g:SuperTabDefaultCompletionType = "context"
+let g:go_fmt_command = "goimports"
+let g:indentLine_color_term = 2
