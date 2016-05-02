@@ -59,3 +59,5 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:SuperTabDefaultCompletionType = "context"
 let g:go_fmt_command = "goimports"
 let g:indentLine_color_term = 2
+
+let g:tex_conceal = ""
