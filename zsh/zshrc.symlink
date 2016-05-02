@@ -71,6 +71,8 @@ export PGDATA=/Users/Erik/Library/Application\ Support/Postgres/var-9.4
 export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/bin
 export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/include
 
+alias build="$HOME/Dev/bash_scripts/portlet_deploy.sh"
+
 export GOPATH=/Users/Erik/.golang
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
