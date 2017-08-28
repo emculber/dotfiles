@@ -26,6 +26,7 @@ function test.new(args, geometry, style)
     print(s.workarea.height)
     midx = ((s.workarea.width - s.workarea.x)/2) - wwidth/2
     midy = ((s.workarea.height - s.workarea.y-(wheight/2))/2)
+    wwidth = s.workarea.width
     print(midx, midy)
   end)
 
@@ -38,8 +39,6 @@ function test.new(args, geometry, style)
     y=midy, 
     width=wwidth, 
     height=wheight, 
-    border_color="#FFFFFF", 
-    border_width=1,
   })
 
   print("wibox setup")
@@ -52,18 +51,19 @@ function test.new(args, geometry, style)
     draw   = function(self, context, cr, width, height)
       --print("draw")
       --print("height", height)
-      cr:set_source_rgb(1, 0, 0) -- Red
+      cr:set_source_rgb(.80, .80, 1)
       --cr:arc(height/2, height/2, height/2, 0, math.pi)
       local pi = math.pi
-      local a = 100
-      local b = 700
-      local c = 100
-      local d = 500
-      local radius = 150
-      cr:arc(a + radius, c + radius, radius, 2*(pi/2), 3*(pi/2))
-      cr:arc(b - radius, c + radius, radius, 3*(pi/2), 4*(pi/2))
-      cr:arc(b - radius, d - radius, radius, 0*(pi/2), 1*(pi/2))
-      cr:arc(a + radius, d - radius, radius, 1*(pi/2), 2*(pi/2))
+      local a = 0
+      local b = height
+      local c = 0
+      local d = width
+      local radius = 10
+      --cr:arc(radius, radius, radius, 2*(pi/2), 3*(pi/2))
+      cr:arc(radius, radius, radius, 2*(pi/2), 3*(pi/2))
+      cr:arc(height - radius, radius, radius, 3*(pi/2), 4*(pi/2))
+      cr:arc(height - radius, width - radius, radius, 0*(pi/2), 1*(pi/2))
+      cr:arc(radius, width - radius, radius, 1*(pi/2), 2*(pi/2))
       cr:close_path()
       cr:stroke()
       cr:fill()

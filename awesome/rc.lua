@@ -185,8 +185,31 @@ root.buttons(awful.util.table.join(
 ))
 -- }}}
 
+local tags = root.tags()
+local locked = false
+local function lock_screen() 
+  if locked then return end
+  print("Running Move to new tag")
+  for k, v in pairs(tags) do
+    v.activated = false
+    print(k, v.name, v.activated)
+  end
+  locked = true
+end
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+    awful.key({ }, "F12", lock_screen,
+              {description = "add a tag with the focused client", group = "tag"}),
+    awful.key({ }, "F11", function ()
+              print("Running Move to new tag")
+                for k, v in pairs(tags) do
+                  v.activated = true
+                  print(k, v.name, v.activated)
+                end
+                awful.tag.history.restore(1)
+                locked = false
+              end,
+              {description = "add a tag with the focused client", group = "tag"}),
     awful.key({ env.modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ env.modkey,           }, "Left",   awful.tag.viewprev,
@@ -503,7 +526,7 @@ if timestamp.is_startup() then
   print(timestamp)
 end
 
-local test = require("test")
-local teswid = {}
-teswid.widget = test()
-for k,v in pairs(teswid.widget) do print("-- " .. k,v) end
+-- local test = require("test")
+-- local teswid = {}
+-- teswid.widget = test()
+-- for k,v in pairs(teswid.widget) do print("-- " .. k,v) end
