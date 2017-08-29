@@ -194,12 +194,35 @@ local function lock_screen()
     v.activated = false
     print(k, v.name, v.activated)
   end
+  gears.wallpaper.set(gears.color("#111111"))
+  local test = require("test")
+  local teswid = {}
+  teswid.widget = test()
+  for k,v in pairs(teswid.widget) do print("-- " .. k,v) end
+  passCheck = wibox.widget.textbox()
+  passCheck:set_text("Password Here")
+  local tb = wibox.widget.textbox()
+  tb:set_text("Hello world! ")
+
+  awful.prompt.run {
+    prompt       = '<b>Echo: </b>',
+    text         = 'default command',
+    bg_cursor    = '#000000',
+    -- To use the default rc.lua prompt:
+    textbox      = mouse.screen.mypromptbox.widget,
+    --textbox      = tb,
+    exe_callback = function(input)
+      if not input or #input == 0 then return end
+      naughty.notify{ text = 'The input was: '..input }
+    end
+  }
+
   locked = true
 end
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
     awful.key({ }, "F12", lock_screen,
-              {description = "add a tag with the focused client", group = "tag"}),
+              {description = "add a tag with the focused client", group = "custom"}),
     awful.key({ }, "F11", function ()
               print("Running Move to new tag")
                 for k, v in pairs(tags) do
@@ -207,9 +230,10 @@ globalkeys = awful.util.table.join(
                   print(k, v.name, v.activated)
                 end
                 awful.tag.history.restore(1)
+                set_wallpaper(1)
                 locked = false
               end,
-              {description = "add a tag with the focused client", group = "tag"}),
+              {description = "add a tag with the focused client", group = "custom"}),
     awful.key({ env.modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ env.modkey,           }, "Left",   awful.tag.viewprev,
