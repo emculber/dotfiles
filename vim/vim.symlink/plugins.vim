@@ -17,6 +17,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-latex/vim-latex'
+Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'qualiabyte/vim-colorstepper'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
