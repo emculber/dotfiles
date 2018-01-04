@@ -80,6 +80,8 @@ alias cgrep='grep -rin --colour=auto'
 alias ll='ls' 
 alias ls='ls -la' 
 alias pros='ps aux | grep' 
+alias lock='i3lock -c 111111 -n'
+alias tmux='tmux -2'
 
 # source all .zsh files inside of the zsh/ directory
 for config ($ZSH/**/*.zsh) source $config

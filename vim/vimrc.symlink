@@ -12,13 +12,13 @@ filetype plugin on
 filetype plugin indent on
 syntax on
 
-colorscheme BusyBee
-set background=dark
+colorscheme clue
+" set background=dark
 
 set ignorecase
 set hlsearch
-set undofile                            "Allow for undoing AFTER a file is :wq
 set undodir=$HOME/.vim/undo             "Dir used for undo
+set undofile                            "Allow for undoing AFTER a file is :wq
 set number                              "Display line numbers
 set ai                                  "Auto Indent
 set si                                  "Smart Indent
@@ -34,7 +34,7 @@ set backspace=indent,eol,start
 "  Key Bindings
 "##################
 
-"
+
 nmap <F8> :TagbarToggle<CR>
 imap jj <Esc>
 
@@ -42,6 +42,11 @@ nmap <silent> KK :wincmd k<CR>
 nmap <silent> JJ :wincmd j<CR>
 nmap <silent> HH :wincmd h<CR>
 nmap <silent> LL  :wincmd l<CR>
+
+" ColorStepper Keys
+nmap <F2> <Plug>ColorstepPrev
+nmap <F3> <Plug>ColorstepNext
+nmap <S-F7> <Plug>ColorstepReload
 
 
 "##################
