@@ -16,17 +16,6 @@ autoload -U compinit
 autoload -U compinit && compinit
 autoload colors zsh/terminfo
 
-#PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg_no_bold[yellow]%}%1~ %{$reset_color%}%#"
-
-#source $DOTFILES/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source $DOTFILES/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-#source $DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
-
-#zsh-completions
-#fpath=($DOTFILES/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh $fpath)
-#fpath=($fpath $DOTFILES/zsh/plugins/func)
-#typeset -U fpath
-
 zmodload zsh/terminfo
 
 if [[ `uname` == 'Darwin' ]]; then
@@ -37,51 +26,61 @@ else
   bindkey "$terminfo[kcud1]" history-substring-search-down
 fi
 
-if [ "$TERM" = "xterm" ]; then
-  local Mode=$[ $RANDOM % 3 ]
-  local Color=$[ $RANDOM % 6 ]
-  local RandomColor=$'%{\e[$Mode;$[31+$Color]m%}'
-  local Default=$'%{\e[1;m%}'
-  setopt PROMPT_SUBST
-  PajsdflkjROMPT=${RandomColor}${PROMPT}${Default}
-  if [ "x${RPROMPT}" != "x" ]; then
-    RPROMPT=${RandomColor}${default}${RandomColor}
-  fi
-fi
-
-export M2_HOME=$HOME/uportal/maven
-export M2=$M2_HOME/bin
-export PATH=$M2:$PATH
-
-export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+export JAVA_HOME=/usr/lib/jvm/zulu21/
 export PATH=$JAVA_HOME/bin:$PATH
-
-export ANT_HOME=$HOME/uportal/ant
-export PATH=$PATH:$ANT_HOME/bin
-
-export TOMCAT_HOME=$HOME/uportal/tomcat
-export PATH=$PATH:$TOMCAT_HOME
-export JAVA_OPTS="-server -XX:MaxPermSize=512m -Xms1024m -Xmx2048m"
-
-export HSQLDB_HOME=$HOME/uportal/hsqldb
-export PATH=$PATH:$HSQLDB_HOME/bin
-
-export POSTGRES_HOME=/Applications/Postgres.app/Contents
-export PGDATA=/Users/Erik/Library/Application\ Support/Postgres/var-9.4
-export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/bin
-export PATH=$PATH:$POSTGRES_HOME/Versions/9.4/include
-
-export GOPATH=/home/erik/.golang
+# export PATH=/opt/go/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
+export GOPATH=$HOME/.golang
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
 
-alias build="$HOME/programming/bash/scripts/portlet_deploy.sh"
+export PATH=$PATH:$HOME/.zig/
+
+export PATH=$PATH:$HOME/.anaconda3/bin/
+
+export LD_LIBRARY_PATH=/usr/lib/cuda/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/lib/cuda/include:$LD_LIBRARY_PATH
+
+export HELIX_DEFAULT_RUNTIME=~/.config/helix/runtime
+
+export PATH=~/.npm-global/bin:$PATH
+
 alias cgrep='grep -rin --colour=auto' 
 alias ll='ls' 
-alias ls='ls -la' 
+alias ls='ls -lah' 
 alias pros='ps aux | grep' 
 alias lock='i3lock -c 111111 -n'
 alias tmux='tmux -2'
 
+git config \
+  --global \
+  url."https://emculber:glpat-YJ5cfXoWkUushL21gbW1@gitlab.com".insteadOf \
+  "https://gitlab.com"
+
 # source all .zsh files inside of the zsh/ directory
 for config ($ZSH/**/*.zsh) source $config
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
+alias vim=nvim
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/home/erik/.anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/erik/.anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/home/erik/.anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/erik/.anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<<
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
