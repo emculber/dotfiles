@@ -114,6 +114,8 @@ function switcher.menu()
 			end,
 		}
 	end
+	-- not clickable: a reminder that these two don't follow the awesome theme
+	items[#items + 1] = { "   (kitty: Argonaut, GTK apps: Gruvbox)" }
 	return items
 end
 
