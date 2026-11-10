@@ -1,0 +1,8 @@
+[url "https://emculber:glpat-YJ5cfXoWkUushL21gbW1@gitlab.com"]
+	insteadOf = https://gitlab.com
+[user]
+	email = eculberson12@gmail.com
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[fetch]
+	prune = true
