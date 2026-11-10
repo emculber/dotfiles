@@ -313,12 +313,25 @@ function common.watch_units(units, on_change)
 	})
 end
 
--- menu shows an awful.menu of items at the mouse, replacing one already open
+-- menu shows an awful.menu of items at the mouse, replacing one already open.
+-- Called again by the same widget while its menu is open, it closes it
+-- instead, so a second right click on an icon dismisses the menu (Escape
+-- still works too). The widget is told apart by its file, so callers just
+-- pass the items
 function common.menu(items)
-	if common.open_menu then
-		common.open_menu:hide()
+	local owner = debug.getinfo(2, "S").source
+	local open = common.open_menu
+	-- visible now, i.e. not already closed by Escape or by picking an item
+	local was_open = open ~= nil and open.wibox.visible
+	if open then
+		open:hide()
+		common.open_menu = nil
+	end
+	if was_open and open.owner == owner then
+		return -- same icon again: just close it
 	end
 	common.open_menu = awful.menu({ items = items, theme = { width = dpi(220) } })
+	common.open_menu.owner = owner
 	common.open_menu:show()
 end
 
