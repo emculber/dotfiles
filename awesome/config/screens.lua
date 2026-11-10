@@ -27,6 +27,7 @@ for _, name in ipairs({
 	"widgets.backup",
 	"widgets.clamav",
 	"widgets.vpn",
+	"widgets.i2p",
 	"widgets.volume",
 	"widgets.nightlight",
 	"widgets.claude",
