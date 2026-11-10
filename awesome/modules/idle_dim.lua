@@ -123,6 +123,11 @@ end
 local function apply(force)
 	local b = number(brightness())
 	local t = tostring(temperature())
+	if t ~= state.announced then
+		-- for widgets/nightlight.lua
+		state.announced = t
+		awesome.emit_signal("idle_dim::temperature", temperature())
+	end
 	local value = t .. " " .. b
 	if value == state.applied and not force then
 		return
@@ -215,10 +220,14 @@ local function on_schedule_tick()
 	apply(true)
 end
 
--- shift_temp moves the temperature by delta kelvin until the next schedule slot
-function idle_dim.shift_temp(delta)
+-- shift_temp moves the temperature by delta kelvin until the next schedule
+-- slot; quiet = true skips the on-screen message (the bar widget shows it)
+function idle_dim.shift_temp(delta, quiet)
 	state.offset = state.offset + delta
 	apply()
+	if quiet then
+		return
+	end
 	idle_dim.notification = naughty.notify({
 		title = "Temperature",
 		text = temperature() .. " K",
@@ -228,8 +237,19 @@ function idle_dim.shift_temp(delta)
 end
 
 -- reset_temp goes back to the scheduled temperature
-function idle_dim.reset_temp()
-	idle_dim.shift_temp(-state.offset)
+function idle_dim.reset_temp(quiet)
+	idle_dim.shift_temp(-state.offset, quiet)
+end
+
+-- temperature returns the current temperature (kelvin), the scheduled one and
+-- the manual offset
+function idle_dim.temperature()
+	return temperature(), schedule[state.slot][2], state.offset
+end
+
+-- is_dimmed says whether the screens are idle-dimmed right now
+function idle_dim.is_dimmed()
+	return state.dimmed
 end
 
 -- dim dims right away, as if idle; the next input undims as usual

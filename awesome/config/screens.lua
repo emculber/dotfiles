@@ -20,7 +20,18 @@ month_calendar:attach(textclock, "tr")
 -- Status widgets for the main monitor's bar. One that fails to load is left
 -- out with an error notification, so the bar still comes up
 local status_widgets = {}
-for _, name in ipairs({ "widgets.sysinfo", "widgets.backup", "widgets.clamav", "widgets.vpn", "widgets.volume", "widgets.claude" }) do
+for _, name in ipairs({
+	"widgets.nowplaying",
+	"widgets.sysinfo",
+	"widgets.gpu",
+	"widgets.backup",
+	"widgets.clamav",
+	"widgets.vpn",
+	"widgets.volume",
+	"widgets.nightlight",
+	"widgets.claude",
+	"widgets.bell",
+}) do
 	local ok, widget = pcall(require, name)
 	if ok then
 		table.insert(status_widgets, widget.widget)

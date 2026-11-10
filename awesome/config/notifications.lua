@@ -26,3 +26,13 @@ local function set(preset, values)
 end
 set(presets.low, { timeout = 4, fg = p.fg_dim, border_color = p.surface })
 set(presets.critical, { timeout = 0, bg = p.bg, fg = p.fg, border_color = p.red, border_width = dpi(2) })
+
+-- app notifications go to the bell's list, and are held back under Do Not
+-- Disturb (widgets/bell.lua). Here rather than in the bar, so it works even
+-- if the bar widget fails to load
+local ok, bell = pcall(require, "widgets.bell")
+if ok then
+	naughty.config.notify_callback = bell.callback
+else
+	naughty.notify({ preset = presets.critical, title = "widgets.bell failed to load", text = tostring(bell) })
+end
