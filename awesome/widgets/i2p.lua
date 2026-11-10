@@ -1,8 +1,8 @@
 -- I2P router in the bar: the I2P logo (widgets/icons/i2p.png, cut from the
 -- router console's logo) tinted by status: green when the network is OK,
 -- yellow when Firewalled or still starting, dim when the router is stopped.
--- Hover for version, uptime, bandwidth and tunnels (click pins it); right
--- click to open the console or start / stop / restart the router.
+-- Click turns the router on or off; hover for version, uptime, bandwidth and
+-- tunnels; right click to open the console or restart it.
 -- Data: scripts/i2p-status.sh every 30 s (pid file + the console sidebar)
 local gears = require("gears")
 local awful = require("awful")
@@ -69,7 +69,7 @@ end
 -- {{{ The hover popup
 local function popup()
 	if data.running ~= "yes" then
-		return "<b>I2P</b>  stopped\n\nRight click to start it"
+		return "<b>I2P</b>  stopped\n\nClick to turn it on"
 	end
 	if data.console ~= "up" then
 		return "<b>I2P</b>  starting (the console isn't answering yet)"
@@ -96,9 +96,22 @@ local function popup()
 			#tunnels > 0 and (": " .. common.escape(table.concat(tunnels, ", "))) or ""
 		)
 	)
-	if data.update and data.update ~= "" then
-		table.insert(lines, common.span("warn", "Update    " .. common.escape(data.update) .. " available (apt)"))
+	-- versions: what apt offers, what's installed, what runs, what's out upstream
+	local function base(v)
+		return (v or ""):match("^(%d+%.%d+%.%d+)")
 	end
+	local installed, candidate, running = base(data.pkg_installed), base(data.pkg_candidate), base(data.version)
+	if candidate and installed and candidate ~= installed then
+		table.insert(lines, common.span("warn", "Update    " .. candidate .. " in apt: sudo apt upgrade"))
+	end
+	if installed and running and installed ~= running then
+		table.insert(lines, common.span("warn", "Restart   to load " .. installed .. " (installed; " .. running .. " is running)"))
+	end
+	local upstream = base(data.update)
+	if upstream and upstream ~= candidate and upstream ~= installed then
+		table.insert(lines, common.span("dim", "Upstream  " .. upstream .. " released, not in the apt repo yet"))
+	end
+	table.insert(lines, common.span("dim", "\nClick: turn " .. (data.running == "yes" and "off" or "on") .. " · right click: more"))
 	return table.concat(lines, "\n")
 end
 
@@ -112,9 +125,16 @@ end)
 
 -- {{{ Right-click menu
 -- router runs i2prouter <action>, reports the result, and refreshes a few
--- times while the router comes up or goes down
+-- times while the router comes up or goes down. Clicks while one runs are
+-- ignored, so a double click can't start and stop it
+local busy = false
 local function router(action)
+	if busy then
+		return
+	end
+	busy = true
 	awful.spawn.easy_async({ "i2prouter", action }, function(stdout, stderr)
+		busy = false
 		local out = (stdout .. stderr):gsub("%s+$", "")
 		naughty.notify({ title = "I2P " .. action, text = out ~= "" and out or "done", timeout = 4 })
 		for _, delay in ipairs({ 2, 10, 30 }) do
@@ -143,14 +163,14 @@ local function menu()
 			end,
 		})
 		table.insert(items, {
-			"Stop router",
+			"Turn off",
 			function()
 				router("stop")
 			end,
 		})
 	else
 		table.insert(items, {
-			"Start router",
+			"Turn on",
 			function()
 				router("start")
 			end,
@@ -159,7 +179,11 @@ local function menu()
 	common.menu(items)
 end
 
-item:buttons(gears.table.join(item:buttons(), awful.button({}, 3, menu)))
+-- click: on/off (instead of attach_popup's pin); right click: the menu
+local function toggle()
+	router(data.running == "yes" and "stop" or "start")
+end
+item:buttons(gears.table.join(awful.button({}, 1, toggle), awful.button({}, 3, menu)))
 -- }}}
 
 render()

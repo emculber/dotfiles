@@ -4,11 +4,22 @@
 # console's sidebar (http://127.0.0.1:7657/xhr1.jsp, no password needed):
 #   running=yes|no  console=up|down  version= uptime=
 #   bw3s= bw5m= ("in / out unit")  used= ("in / out")
-#   network=OK|Firewalled|...  update=<version available, if any>
+#   network=OK|Firewalled|...  update=<newer upstream release the router knows of>
+#   pkg_installed= pkg_candidate= (apt's versions of the i2p package)
 #   tunnels_ready=N tunnels_total=N  tunnel=<name> (one line each)
 
 PIDFILE="$HOME/.i2p/i2p.pid"
 CONSOLE="http://127.0.0.1:7657/xhr1.jsp"
+
+# what apt has: installed and candidate (the router itself only knows upstream
+# releases, which can be ahead of the PPA). apt-cache is slow, so its answer
+# is kept for an hour
+echo "pkg_installed=$(dpkg-query -W -f='${Version}' i2p 2>/dev/null)"
+apt_cache="${XDG_RUNTIME_DIR:-/tmp}/i2p-apt-candidate"
+if [ -z "$(find "$apt_cache" -mmin -60 2>/dev/null)" ]; then
+    apt-cache policy i2p 2>/dev/null | sed -n 's/^ *Candidate: *//p' >"$apt_cache"
+fi
+echo "pkg_candidate=$(cat "$apt_cache" 2>/dev/null)"
 
 pid=$(cat "$PIDFILE" 2>/dev/null)
 if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
