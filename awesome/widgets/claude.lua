@@ -56,6 +56,10 @@ local widget = claude_usage.new({
 	style = "bare", -- icon + text in the theme's colours instead of the terracotta chip
 	on_click = settings.terminal .. " -e claude",
 	watch_cache = false, -- needs inotifywait and the statusLine helper, neither installed
+	-- the plugin fetches 5 s after every awesome start and forgets its 429
+	-- backoff on restart; this curl keeps the last answer and any 429 on disk,
+	-- so reloads and Xephyr test desktops share one fetch (no more "!429")
+	curl_cmd = gears.filesystem.get_configuration_dir() .. "scripts/claude-usage-curl.sh",
 	format = bar_text,
 	forced_width = bar_width(),
 	align = "left", -- any spare room (no flag) goes on the clock side

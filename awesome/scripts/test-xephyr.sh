@@ -17,6 +17,14 @@ mkdir -p "$(dirname "$log")"
 AWESOME_NO_AUTOSTART=1
 export AWESOME_NO_AUTOSTART
 
+# A cache of its own, so the test never writes the real session's wallpaper
+# picks, notification list and so on; it starts with the same theme choice.
+# (claude-usage-curl.sh keeps using the real cache on purpose: one shared fetch)
+test_cache="${XDG_RUNTIME_DIR:-/tmp}/awesome-xephyr-cache"
+rm -rf "$test_cache"
+mkdir -p "$test_cache/awesome"
+cp "${XDG_CACHE_HOME:-$HOME/.cache}/awesome/theme" "$test_cache/awesome/" 2>/dev/null
+
 width=0
 height=0
 for size in "$@"; do
@@ -51,6 +59,6 @@ echo "  DBUS_SESSION_BUS_ADDRESS=\$(cat $bus) awesome-client"
 # The nested awesome gets its own D-Bus session so awesome-client can reach it
 # (on the shared bus the real awesome owns the name). Closing the Xephyr window
 # makes awesome exit 1 ("X server connection broke"), the normal end of a test
-DISPLAY=$display dbus-run-session -- sh -c \
+DISPLAY=$display XDG_CACHE_HOME=$test_cache dbus-run-session -- sh -c \
     'echo "$DBUS_SESSION_BUS_ADDRESS" >"$1"; exec awesome -c "$2"' \
     sh "$bus" "$HOME/.config/awesome/rc.lua" >"$log" 2>&1 || true
