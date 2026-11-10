@@ -50,15 +50,9 @@ local function screen_settings(s)
 	return settings.screens[persist.output(s)] or settings.screen_default
 end
 
+-- rotating or fixed, cropped to fill (modules/wallpaper.lua)
 local function set_wallpaper(s)
-	local name = screen_settings(s).wallpaper
-	local wallpaper = name and settings.backgrounds .. name or beautiful.wallpaper
-	if wallpaper then
-		gears.wallpaper.maximized(wallpaper, s, true)
-	else
-		-- plain theme background, on this screen only
-		gears.wallpaper.tiled(gears.surface.load_from_shape(1, 1, gears.shape.rectangle, beautiful.bg_normal), s)
-	end
+	require("modules.wallpaper").apply(s)
 end
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)

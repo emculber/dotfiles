@@ -29,6 +29,24 @@ local awesome_items = {
 			require("config.autostart").display_setup()
 		end,
 	},
+	{
+		"next wallpaper",
+		function()
+			require("modules.wallpaper").next()
+		end,
+	},
+	{
+		"compositor on/off",
+		function()
+			require("config.autostart").compositor_toggle()
+		end,
+	},
+	{
+		"restart compositor",
+		function()
+			require("config.autostart").compositor_restart()
+		end,
+	},
 	{ "restart", awesome.restart },
 	{
 		"quit",

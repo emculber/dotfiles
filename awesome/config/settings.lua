@@ -40,6 +40,14 @@ settings.layouts = {
 -- Keyed by name, not screen number, because awesome numbers the screens
 -- differently from one restart to the next
 settings.backgrounds = gears.filesystem.get_configuration_dir() .. "backgrounds/"
+-- Wallpaper rotation (modules/wallpaper.lua): "daily", "hourly" or "off".
+-- Pictures come from backgrounds/ and backgrounds/Not-used/; portrait monitors
+-- only get portrait (or square) ones and landscape monitors landscape ones.
+-- "off" uses each monitor's wallpaper below
+settings.wallpaper_rotation = "daily"
+-- picom (rounded corners, shadows, fades; scripts/picom.conf), started with
+-- awesome. The main menu can also turn it off and on until the next login
+settings.compositor = true
 settings.screens = {
 	["HDMI-0"] = {
 		layout = awful.layout.suit.fair,

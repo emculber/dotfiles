@@ -183,6 +183,11 @@ keys.global = gears.table.join(
 		screenshot("--select --freeze")
 	end, { description = "screenshot of a region", group = "screenshot" }),
 
+	-- Wallpapers (modules/wallpaper.lua)
+	awful.key({ modkey, "Shift" }, "w", function()
+		require("modules.wallpaper").next()
+	end, { description = "next wallpaper", group = "custom" }),
+
 	-- Sleep
 	awful.key({ modkey }, "F8", function()
 		awful.spawn("systemctl suspend")
