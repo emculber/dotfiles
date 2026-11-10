@@ -29,5 +29,6 @@ an existing file: move it away first) and makes zsh the login shell.
   fast-syntax-highlighting, zsh-autocomplete). `install.sh` prints the commands if it's missing.
 - **Fonts:** Symbols Nerd Font in `~/.local/share/fonts` (kitty's `font-nerd-symbols.conf`).
   kitty.conf asks for Iosevka Nerd Font Mono, which isn't installed at the moment.
+- **Wallpapers:** `awesome/backgrounds/` is git-ignored (too big); copy it over by hand.
 - **Packages:** awesome, kitty, neovim, tmux, zsh, and for the awesome widgets: wpctl/pw-dump/jq
   (PipeWire), playerctl, pavucontrol, borg, ClamAV, protonvpn.

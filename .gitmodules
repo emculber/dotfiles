@@ -1,0 +1,3 @@
+[submodule "awesome/widgets/claude_usage"]
+	path = awesome/widgets/claude_usage
+	url = https://github.com/derblub/awesome-claude-usage.git
